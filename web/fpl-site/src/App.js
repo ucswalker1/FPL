@@ -25,6 +25,10 @@ function App() {
         accessor: "price",
       },
       {
+        Header: "Ownership",
+        accessor: "ownership",
+      },
+      {
         Header: "xPoints",
         accessor: "xP",
       },
@@ -38,11 +42,11 @@ function App() {
   return (
     <div className="App">
       <>
-      <GlobalFilter 
+      {/* <GlobalFilter 
         preGlobalFilteredRows={preGlobalFilteredRows}
         setGlobalFilter={setGlobalFilter}
         globalFilter={state.globalFilter}
-      />
+      /> */}
       <div className="container">
         <table {...getTableProps()}>
           <thead>
