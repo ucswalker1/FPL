@@ -1,8 +1,9 @@
 import "./App.css";
 import * as React from "react";
-import { useTable } from "react-table";
+import { useTable, useSortBy, useGlobalFilter } from "react-table";
 
 import testData from "./data/test.json";
+import { GlobalFilter } from "./componenets/globalfilter";
 
 function App() {
   const data = React.useMemo(() => testData, [])
@@ -20,6 +21,10 @@ function App() {
         accessor: "team",
       },
       {
+        Header: "Price",
+        accessor: "price",
+      },
+      {
         Header: "xPoints",
         accessor: "xP",
       },
@@ -27,18 +32,26 @@ function App() {
     []
   );
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({columns, data});
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow, preGlobalFilteredRows, setGlobalFilter, state } 
+    = useTable({columns, data}, useGlobalFilter, useSortBy);
 
   return (
     <div className="App">
+      <>
+      <GlobalFilter 
+        preGlobalFilteredRows={preGlobalFilteredRows}
+        setGlobalFilter={setGlobalFilter}
+        globalFilter={state.globalFilter}
+      />
       <div className="container">
         <table {...getTableProps()}>
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map((column) => (
-                  <th {...column.getHeaderProps()}>
+                  <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render("Header")}
+                    {column.isSorted ? (column.isSortedDesc ? " ▼": " ▲") : "  "}
                   </th>
                 ))}
               </tr>
@@ -60,6 +73,7 @@ function App() {
           </tbody>
         </table>
       </div>
+      </>
     </div>
   );
 }
