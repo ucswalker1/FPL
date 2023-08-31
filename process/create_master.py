@@ -17,7 +17,7 @@ for file in os.listdir(path):
     filename = os.fsdecode(file)
     first, last, id = filename.split('_')
 
-    start_time = time.time()
+    # start_time = time.time()
 
     name = first + ' ' + last 
 
@@ -40,8 +40,14 @@ for file in os.listdir(path):
     df['kickoff_time'] = [date[:10] for date in df['kickoff_time']]   
 
     stat_search = f'/Users/calvinwalker/Documents/Projects/FPL/data/understat/{first}_{last}_*' 
+    
+    if not glob.glob(stat_search):
+         print(first, last)
+         stat_search = f'/Users/calvinwalker/Documents/Projects/FPL/data/understat/{first}__*'
 
     for f in glob.glob(stat_search):
+
+        print(f)
 
         df_stats = pd.read_csv(f)
         df_stats.drop(columns=['season'])
@@ -79,7 +85,7 @@ for file in os.listdir(path):
     # print((df['avg_xGChain']).max)
     # print(df)
     # break
-    print(f"cleaned {name} in {time.time() - start_time}")
+    # print(f"cleaned {name} in {time.time() - start_time}")
     master = pd.concat([master, df])
 
 master.to_csv('/Users/calvinwalker/Documents/Projects/FPL/data/master_players.csv')
