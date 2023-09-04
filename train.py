@@ -83,11 +83,11 @@ if __name__ == "__main__":
 # GOAL for EOD: display some predictions for next week #
 
 # Priority:
+# 1. Retrain GK model
+# 2. Do some predictions! Work on the site
+# ... 
 # Fix Pipeline: spend < 1hr just compiling FPL and understat ids for all current prem players
 # Continue tuning model, consider different specifications
-
-# Lower: 
-# Merge understat data to past seasons for more training data
 
 # Low: 
 # Transfer solver
