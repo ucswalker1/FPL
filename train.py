@@ -26,7 +26,7 @@ class Model:
         X_train, X_test, y_train, y_test = train_test_split(self.X, self.y, test_size=0.10, random_state=1)
         self.regr.fit(X_train, y_train)
 
-        joblib.dump(self.regr, f"/Users/calvinwalker/Documents/Projects/FPL/models/model_{int(self.pos)}.pkl")
+        joblib.dump(self.regr, f"/Users/calvinwalker/Documents/Projects/FPL/models/new/model_{int(self.pos)}.pkl")
 
         predict_train = self.regr.predict(X_train)
         predict_test = self.regr.predict(X_test)
@@ -70,23 +70,19 @@ if __name__ == "__main__":
     GOALKEEPERS = df[df['pos'] == 1]
 
     for position in [
-                # FORWARDS, 
-                    #  MIDFIELDERS, DEFENDERS, 
-                     GOALKEEPERS]:
-        
+                FORWARDS, 
+                MIDFIELDERS, 
+                DEFENDERS, 
+                GOALKEEPERS,
+    ]:
+
         model = Model(position)
         model.train()
 
 
 ### TODO ### 
 
-# GOAL for EOD: display some predictions for next week #
-
 # Priority:
-# 1. Retrain GK model
-# 2. Do some predictions! Work on the site
-# ... 
-# Fix Pipeline: spend < 1hr just compiling FPL and understat ids for all current prem players
 # Continue tuning model, consider different specifications
 
 # Low: 

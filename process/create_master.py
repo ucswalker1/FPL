@@ -12,17 +12,23 @@ master = pd.DataFrame()
 
 path = '/Users/calvinwalker/Documents/Projects/FPL/data/2023-24/players'
 
+ids_df = pd.read_csv("/Users/calvinwalker/Documents/Projects/FPL/data/uuids.csv", usecols=['id', 'u_id'])
+ids_df = ids_df.dropna()
+
+fpl_id_to_uid = {int(fpl_id): int(u_id) for fpl_id, u_id in zip(ids_df['id'], ids_df['u_id'])}
+
 for file in os.listdir(path):
 
-    # if file != 'Allan_Campbell_319':
-    #     continue
-
-    # print(file)
-
     filename = os.fsdecode(file)
-    first, last, id = filename.split('_')
+    try:
+        first, last, fpl_id = filename.split('_')
+    except ValueError:
+        print(filename)
 
-    # start_time = time.time()
+    understat_id = fpl_id_to_uid.get(int(fpl_id), False)
+
+    if not understat_id:
+        continue
 
     name = first + ' ' + last 
 
@@ -44,17 +50,17 @@ for file in os.listdir(path):
 
     df['kickoff_time'] = [date[:10] for date in df['kickoff_time']]   
 
-    stat_search = f'/Users/calvinwalker/Documents/Projects/FPL/data/understat/{first}_{last}_*' 
-    
+    stat_search = f'/Users/calvinwalker/Documents/Projects/FPL/data/understat/*{understat_id}.csv' 
+
     # fix this!!
     if not glob.glob(stat_search):
+        print(stat_search, first, last, fpl_id, understat_id)
         continue
-    #      print(first, last)
-    #      stat_search = f'/Users/calvinwalker/Documents/Projects/FPL/data/understat/{first}__*'
-
+        # raise ValueError
+    
     for f in glob.glob(stat_search):
 
-        print(f)
+        # print(f)
 
         df_stats = pd.read_csv(f)
         df_stats.drop(columns=['season'])

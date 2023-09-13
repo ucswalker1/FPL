@@ -231,6 +231,8 @@ DEF_FEATURES = [
 GK_FEATURES = [
     "penalties_saved", 
     "saves",
+    "avg_clean_sheets", 
+    "avg_transfers_balance",
     # "avg_goals_conceded",
     "team_spi",
     "opponent_spi",

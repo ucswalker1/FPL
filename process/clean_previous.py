@@ -3,14 +3,13 @@ import pandas as pd
 import numpy as np
 from textdistance import levenshtein
 
-from .lib.shared.config import *
-from .lib import utils
+from lib.config import *
 
 df = pd.read_csv("/Users/calvinwalker/Documents/Projects/FPL/data/master_players.csv")
 df = df[df['avg_xGBuildup'].notna()]
 df = df[df['kickoff_time'] < '2023-08-10']
 
-spi = pd.read_csv('/Users/calvinwalker/Downloads/soccer-spi/spi_matches.csv')
+spi = pd.read_csv('/Users/calvinwalker/Documents/Projects/FPL/data/soccer-spi/spi_matches.csv')
 
 spi = spi[(spi['league'] == 'Barclays Premier League') | (spi['league'] == 'French Ligue 1') | (spi['league'] == 'English League Championship') |
             (spi['league'] == 'German Bundesliga') | (spi['league'] == 'Italy Serie A') | (spi['league'] == 'Spanish Primera Division')]
@@ -52,8 +51,6 @@ for i, row in df.iterrows():
 
     if date == "2023-04-30" and t1 == "Strasbourg" and t2  == "Lyon":
         continue
-
-    print(date, t1, t2)
 
     if date > '2023-08-10':
         continue
